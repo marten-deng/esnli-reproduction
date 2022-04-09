@@ -254,11 +254,12 @@ def trainepoch(epoch):
         expl_batch, expl_len = get_batch(
             expl_1[stidx:stidx + params.batch_size], word_vec)
         #expl_batch = Variable(expl_batch.cuda())
-        expl_batch = expl_batch.to(device)
+        expl_batch.to(device)
+        print(expl_batch)
 
         tgt_label_batch = Variable(torch.LongTensor(
             label[stidx:stidx + params.batch_size])).cuda()
-        tgt_label_batch = tgt_label_batch.to(device)
+        tgt_label_batch.to(device)
 
         # model forward train
         out_lbl = esnli_net((expl_batch, expl_len))
