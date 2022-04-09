@@ -251,7 +251,6 @@ def trainepoch(epoch):
     print(('Learning rate : {0}'.format(optimizer.param_groups[0]['lr'])))
 
     for stidx in range(0, len(expl_1), params.batch_size):
-        print(stidx)
         # prepare batch
         expl_batch, expl_len = get_batch(
             expl_1[stidx:stidx + params.batch_size], word_vec)
