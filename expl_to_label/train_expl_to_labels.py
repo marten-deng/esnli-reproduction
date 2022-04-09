@@ -15,8 +15,8 @@ import torch.nn as nn
 from data_expl_to_labels import get_train, get_batch, build_vocab, get_dev_test_with_expl, NLI_DIC_LABELS
 from models_expl_to_labels import ExplToLabelsNet
 
-sys.path.append("..")
-from utils.mutils import get_optimizer, makedirs, pretty_duration, get_key_from_val, n_parameters, remove_file, assert_sizes
+sys.path.append("./utils")
+from mutils import get_optimizer, makedirs, pretty_duration, get_key_from_val, n_parameters, remove_file, assert_sizes
 
 
 import streamtologger

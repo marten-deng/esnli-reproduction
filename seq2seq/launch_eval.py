@@ -33,7 +33,8 @@ eval_params = parser.parse_args()
 
 streamtologger.redirect(target=eval_params.directory + '/log_eval.txt')
 
-state = torch.load(os.path.join(eval_params.directory, eval_params.state_path))
+print(os.path.join(eval_params.directory, eval_params.state_path))
+state = torch.load(os.path.join(eval_params.directory, eval_params.state_path), map_location=torch.device('cpu'))
 model_config = state['config_model']
 
 model_state_dict = state['model_state']

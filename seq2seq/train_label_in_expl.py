@@ -22,8 +22,8 @@ import matplotlib.pyplot as plt
 from data_label_in_expl import get_train, get_batch, build_vocab, get_word_dict, get_target_expl_batch, get_dev_test_with_expl, get_dev_or_test_without_expl, NLI_DIC_LABELS, NLI_LABELS_TO_NLI
 from models_esnli_init import eSNLINet
 from eval_sent_embeddings_labels_in_expl import eval_all
-sys.path.append("..")
-from utils.mutils import get_optimizer, makedirs, pretty_duration, get_sentence_from_indices, get_key_from_val, n_parameters, remove_file, assert_sizes, permute
+sys.path.append("./utils")
+from mutils import get_optimizer, makedirs, pretty_duration, get_sentence_from_indices, get_key_from_val, n_parameters, remove_file, assert_sizes, permute
 
 
 GLOVE_PATH = '../dataset/GloVe/glove.840B.300d.txt'

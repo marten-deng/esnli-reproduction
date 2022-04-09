@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "C:\Users\dengm\OneDrive\Desktop\Uni2022\Thesis\e-SNLI\seq2seq\launch_eval.py", line 36, in <module>
+    state = torch.load(os.path.join(eval_params.directory, eval_params.state_path))
+  File "C:\Users\dengm\AppData\Local\Programs\Python\Python39\lib\site-packages\torch\serialization.py", line 594, in load
+    with _open_file_like(f, 'rb') as opened_file:
+  File "C:\Users\dengm\AppData\Local\Programs\Python\Python39\lib\site-packages\torch\serialization.py", line 230, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "C:\Users\dengm\AppData\Local\Programs\Python\Python39\lib\site-packages\torch\serialization.py", line 211, in __init__
+    super(_open_file, self).__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: '.\\'
+Traceback (most recent call last):
+  File "C:\Users\dengm\OneDrive\Desktop\Uni2022\Thesis\e-SNLI\seq2seq\launch_eval.py", line 36, in <module>
+    state = torch.load(os.path.join(eval_params.directory, eval_params.state_path))
+  File "C:\Users\dengm\AppData\Local\Programs\Python\Python39\lib\site-packages\torch\serialization.py", line 594, in load
+    with _open_file_like(f, 'rb') as opened_file:
+  File "C:\Users\dengm\AppData\Local\Programs\Python\Python39\lib\site-packages\torch\serialization.py", line 230, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "C:\Users\dengm\AppData\Local\Programs\Python\Python39\lib\site-packages\torch\serialization.py", line 211, in __init__
+    super(_open_file, self).__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\dengm\\OneDrive\\Desktop\\Uni2022\\Thesis\\e-SNLI\\'

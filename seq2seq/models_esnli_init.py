@@ -8,7 +8,7 @@ import torch
 import torch.nn as nn
 from torch.autograd import Variable
 import sys
-# sys.path.append("..")
+sys.path.append("./utils")
 from mutils import get_keys_from_vals, assert_sizes, get_key_from_val
 from data_label_in_expl import NLI_DIC_LABELS
 
