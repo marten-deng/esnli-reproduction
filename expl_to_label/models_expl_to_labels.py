@@ -19,6 +19,7 @@ class BLSTMEncoder(nn.Module):
         self.enc_rnn_dim = config['enc_rnn_dim']
         self.pool_type = config['pool_type']
         self.dpout_enc = config['dpout_enc']
+        self.device = config['device']
 
         self.enc_lstm = nn.LSTM(self.word_emb_dim, self.enc_rnn_dim, 1,
                                 bidirectional=True, dropout=self.dpout_enc)
@@ -36,8 +37,7 @@ class BLSTMEncoder(nn.Module):
         sent_len, idx_sort = np.sort(sent_len)[::-1], np.argsort(-sent_len)
         idx_unsort = np.argsort(idx_sort)
 
-        idx_sort = torch.from_numpy(idx_sort).cuda() if self.is_cuda() \
-            else torch.from_numpy(idx_sort)
+        idx_sort = torch.from_numpy(idx_sort).to(self.device)
         sent = sent.index_select(1, Variable(idx_sort))
 
         # Handling padding in Recurrent Networks
@@ -51,8 +51,7 @@ class BLSTMEncoder(nn.Module):
             sent_output, False, padding_value)[0]
 
         # Un-sort by length
-        idx_unsort = torch.from_numpy(idx_unsort).cuda() if self.is_cuda() \
-            else torch.from_numpy(idx_unsort)
+        idx_unsort = torch.from_numpy(idx_unsort).to(self.device)
         sent_output = sent_output.index_select(1, Variable(idx_unsort))
         sent_len = sent_len[idx_unsort]
 
@@ -205,7 +204,7 @@ class BLSTMEncoder(nn.Module):
             batch = Variable(self.get_batch(
                 sentences[stidx:stidx + bsize]), volatile=True)
             if self.is_cuda():
-                batch = batch.cuda()
+                batch = batch.to(self.device)
             batch = self.forward(
                 (batch, lengths[stidx:stidx + bsize])).data.cpu().numpy()
             embeddings.append(batch)

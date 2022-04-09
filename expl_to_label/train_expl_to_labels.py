@@ -208,12 +208,13 @@ config_nli_model = {
     'encoder_type': params.encoder_type,
     'use_cuda': True,
     'word_vec': word_vec,
+    'device': device,
 }
 
 
 # model
 esnli_net = ExplToLabelsNet(config_nli_model)
-print(esnli_net)
+esnli_net.to(device=device)
 print(("Number of trainable paramters: ", n_parameters(esnli_net)))
 
 # loss labels
