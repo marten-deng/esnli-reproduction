@@ -227,6 +227,7 @@ optimizer = optim_fn(esnli_net.parameters(), **optim_params)
 # cuda by default
 esnli_net.to(device)
 criterion_labels.to(device)
+optimizer.to(device)
 
 """
 TRAIN
