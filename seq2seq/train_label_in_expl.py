@@ -19,7 +19,6 @@ import matplotlib
 matplotlib.use("agg")
 import matplotlib.pyplot as plt
 
-sys.path.append(f"{os.getcwd()}/seq2seq")
 from data_label_in_expl import get_train, get_batch, build_vocab, get_word_dict, get_target_expl_batch, get_dev_test_with_expl, get_dev_or_test_without_expl, NLI_DIC_LABELS, NLI_LABELS_TO_NLI
 from models_esnli_init import eSNLINet
 from eval_sent_embeddings_labels_in_expl import eval_all
@@ -230,10 +229,10 @@ current_run_dir = params.results_dir + "/" + \
     params.save_title  # + str(sys.argv[1:])
 params.current_run_dir = current_run_dir
 makedirs(current_run_dir)
-copy2('models_esnli_init.py', current_run_dir)
-copy2('train_label_in_expl.py', current_run_dir)
-copy2('data_label_in_expl.py', current_run_dir)
-copy2('eval_sent_embeddings_labels_in_expl.py', current_run_dir)
+copy2('./models_esnli_init.py', current_run_dir)
+copy2('./train_label_in_expl.py', current_run_dir)
+copy2('./data_label_in_expl.py', current_run_dir)
+copy2('./eval_sent_embeddings_labels_in_expl.py', current_run_dir)
 
 streamtologger.redirect(target=current_run_dir + '/log.txt')
 
