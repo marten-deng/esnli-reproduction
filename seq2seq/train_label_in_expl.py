@@ -229,10 +229,10 @@ current_run_dir = params.results_dir + "/" + \
     params.save_title  # + str(sys.argv[1:])
 params.current_run_dir = current_run_dir
 makedirs(current_run_dir)
-copy2('./models_esnli_init.py', current_run_dir)
-copy2('./train_label_in_expl.py', current_run_dir)
-copy2('./data_label_in_expl.py', current_run_dir)
-copy2('./eval_sent_embeddings_labels_in_expl.py', current_run_dir)
+copy2('seq2seq/models_esnli_init.py', current_run_dir)
+copy2('seq2seq/train_label_in_expl.py', current_run_dir)
+copy2('seq2seq/data_label_in_expl.py', current_run_dir)
+copy2('seq2seq/eval_sent_embeddings_labels_in_expl.py', current_run_dir)
 
 streamtologger.redirect(target=current_run_dir + '/log.txt')
 
