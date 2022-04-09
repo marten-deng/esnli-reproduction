@@ -261,8 +261,8 @@ def trainepoch(epoch):
         tgt_label_batch.to(device)
 
         # model forward train
-        out_lbl = esnli_net((expl_batch, expl_len))
-        pred = out_lbl.data.max(1)[1].copy()
+        out_lbl = esnli_net((expl_batch.copy(), expl_len))
+        pred = out_lbl.data.max(1)[1]
         current_bs = len(pred)
         correct += pred.long().eq(tgt_label_batch.data.long()).cpu().sum()
 
