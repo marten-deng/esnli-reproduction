@@ -151,7 +151,6 @@ streamtologger.redirect(target=current_run_dir + '/log.txt')
 
 # set gpu device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-torch.cuda.set_device(params.gpu_id)
 
 # print parameters passed, and all parameters
 print(('\ntogrep : {0}\n'.format(sys.argv[1:])))
@@ -225,8 +224,8 @@ optim_fn, optim_params = get_optimizer(params.optimizer)
 optimizer = optim_fn(esnli_net.parameters(), **optim_params)
 
 # cuda by default
-esnli_net.cuda()
-criterion_labels.cuda()
+esnli_net.to(device)
+criterion_labels.to(device)
 
 """
 TRAIN
