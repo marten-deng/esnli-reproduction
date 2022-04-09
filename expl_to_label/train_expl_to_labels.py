@@ -25,13 +25,13 @@ import matplotlib
 matplotlib.use("agg")
 import matplotlib.pyplot as plt
 
-GLOVE_PATH = '../dataset/GloVe/glove.840B.300d.txt'
+GLOVE_PATH = './dataset/GloVe/glove.840B.300d.txt'
 
 
 parser = argparse.ArgumentParser(description='NLI training')
 # paths
 parser.add_argument("--esnli_path", type=str,
-                    default='../dataset/eSNLI/', help="eSNLI data path")
+                    default='./dataset/eSNLI/', help="eSNLI data path")
 parser.add_argument("--n_train", type=int, default=-1)
 parser.add_argument("--save_title", type=str, default='')
 parser.add_argument("--results_dir", type=str,
@@ -140,6 +140,7 @@ if not params.cudnn_deterministic:
 current_run_dir = params.results_dir + "/" + \
     time.strftime("%d:%m") + "_" + \
     time.strftime("%H:%M:%S") + params.save_title
+print(current_run_dir)
 params.current_run_dir = current_run_dir
 makedirs(current_run_dir)
 copy2('expl_to_label/models_expl_to_labels.py', current_run_dir)
