@@ -140,7 +140,7 @@ if not params.cudnn_deterministic:
 current_run_dir = params.results_dir + "/" + \
     time.strftime("%d:%m") + "_" + \
     time.strftime("%H:%M:%S") + params.save_title
-print(current_run_dir)
+
 params.current_run_dir = current_run_dir
 makedirs(current_run_dir)
 copy2('expl_to_label/models_expl_to_labels.py', current_run_dir)
@@ -225,8 +225,8 @@ optim_fn, optim_params = get_optimizer(params.optimizer)
 optimizer = optim_fn(esnli_net.parameters(), **optim_params)
 
 # cuda by default
-esnli_net = esnli_net.to(device)
-criterion_labels.to(device)
+esnli_net.to(device=device)
+criterion_labels.to(device=device)
 
 """
 TRAIN
