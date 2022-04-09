@@ -142,9 +142,9 @@ current_run_dir = params.results_dir + "/" + \
     time.strftime("%H:%M:%S") + params.save_title
 params.current_run_dir = current_run_dir
 makedirs(current_run_dir)
-copy2('models_expl_to_labels.py', current_run_dir)
-copy2('train_expl_to_labels.py', current_run_dir)
-copy2('data_expl_to_labels.py', current_run_dir)
+copy2('expl_to_label/models_expl_to_labels.py', current_run_dir)
+copy2('expl_to_label/train_expl_to_labels.py', current_run_dir)
+copy2('expl_to_label/data_expl_to_labels.py', current_run_dir)
 
 streamtologger.redirect(target=current_run_dir + '/log.txt')
 
