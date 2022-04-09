@@ -225,7 +225,7 @@ optim_fn, optim_params = get_optimizer(params.optimizer)
 optimizer = optim_fn(esnli_net.parameters(), **optim_params)
 
 # cuda by default
-esnli_net.to(device)
+esnli_net = esnli_net.to(device)
 criterion_labels.to(device)
 
 """
