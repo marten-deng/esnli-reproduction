@@ -26,7 +26,7 @@ sys.path.append("./utils")
 from mutils import get_optimizer, makedirs, pretty_duration, get_sentence_from_indices, get_key_from_val, n_parameters, remove_file, assert_sizes, permute
 
 
-GLOVE_PATH = '../dataset/GloVe/glove.840B.300d.txt'
+GLOVE_PATH = './dataset/GloVe/glove.840B.300d.txt'
 
 
 parser = argparse.ArgumentParser(description='NLI training')
@@ -237,7 +237,7 @@ copy2('eval_sent_embeddings_labels_in_expl.py', current_run_dir)
 streamtologger.redirect(target=current_run_dir + '/log.txt')
 
 # set gpu device
-torch.cuda.set_device(params.gpu_id)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # print parameters passed, and all parameters
 print(('\ntogrep : {0}\n'.format(sys.argv[1:])))
@@ -328,9 +328,8 @@ config_nli_model = {
     'smaller_inp_dec_dim': params.smaller_inp_dec_dim,
     'use_diff_prod_sent_embed': params.use_diff_prod_sent_embed,
     'relu_before_pool': params.relu_before_pool,
-
+    'device': device,
 }
-
 
 # model
 esnli_net = eSNLINet(config_nli_model)
@@ -350,9 +349,9 @@ optim_fn, optim_params = get_optimizer(params.optimizer)
 optimizer = optim_fn(esnli_net.parameters(), **optim_params)
 
 # cuda by default
-esnli_net.cuda()
-criterion_labels.cuda()
-criterion_expl.cuda()
+esnli_net.to(device)
+criterion_labels.to(device)
+criterion_expl.to(device)
 
 """
 TRAIN
@@ -399,17 +398,17 @@ def trainepoch(epoch):
         # eliminate last input to explanation because we wouldn't need to input </s> and we need same number of input and output
         input_expl_batch = input_expl_batch[:-1]
 
-        s1_batch, s2_batch, input_expl_batch = Variable(s1_batch.cuda()), Variable(
-            s2_batch.cuda()), Variable(input_expl_batch.cuda())
-        tgt_label_batch = Variable(torch.LongTensor(
-            label[stidx:stidx + params.batch_size])).cuda()
+        s1_batch, s2_batch, input_expl_batch = s1_batch.to(device), s2_batch.to(device), input_expl_batch.to(device)
+        tgt_label_batch = torch.LongTensor(
+            label[stidx:stidx + params.batch_size])
+        tgt_label_batch = tgt_label_batch.to(device)
         tgt_label_expl_batch = label_expl[stidx:stidx + params.batch_size]
 
         tgt_expl_batch, lens_tgt_expl = get_target_expl_batch(
             expl_1[stidx:stidx + params.batch_size], word_index)
         assert tgt_expl_batch.dim() == 2, "tgt_expl_batch.dim()=" + \
             str(tgt_expl_batch.dim())
-        tgt_expl_batch = Variable(tgt_expl_batch).cuda()
+        tgt_expl_batch = tgt_expl_batch.to(device)
 
         # model forward train
         out_expl, out_lbl = esnli_net(
@@ -533,10 +532,10 @@ def evaluate_dev(epoch):
             s1[i:i + params.eval_batch_size], word_vec)
         s2_batch, s2_len = get_batch(
             s2[i:i + params.eval_batch_size], word_vec)
-        s1_batch, s2_batch = Variable(
-            s1_batch.cuda()), Variable(s2_batch.cuda())
-        tgt_label_batch = Variable(torch.LongTensor(
-            label[i:i + params.eval_batch_size])).cuda()
+        s1_batch, s2_batch = s1_batch.to(device), s2_batch.to(device)
+        tgt_label_batch = torch.LongTensor(
+            label[i:i + params.eval_batch_size])
+        tgt_label_batch = tgt_label_batch.to(device)
 
         # print example
         if i % params.print_every == 0:
@@ -551,14 +550,14 @@ def evaluate_dev(epoch):
             expl = eval("expl_" + str(index))
             input_expl_batch, _ = get_batch(
                 expl[i:i + params.eval_batch_size], word_vec)
-            input_expl_batch = Variable(input_expl_batch[:-1].cuda())
+            input_expl_batch = input_expl_batch[:-1].to(device)
             if i % params.print_every == 0:
                 print("Explanation " + str(index) + " :  ", ' '.join(expl[i]))
             tgt_expl_batch, lens_tgt_expl = get_target_expl_batch(
                 expl[i:i + params.eval_batch_size], word_index)
             assert tgt_expl_batch.dim() == 2, "tgt_expl_batch.dim()=" + \
                 str(tgt_expl_batch.dim())
-            tgt_expl_batch = Variable(tgt_expl_batch).cuda()
+            tgt_expl_batch = tgt_expl_batch.to(device)
             if i % params.print_every == 0:
                 print("Target expl " + str(index) + " :  ", get_sentence_from_indices(
                     word_index, tgt_expl_batch[:, 0]), " LENGHT: ", lens_tgt_expl[0])

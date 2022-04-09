@@ -210,6 +210,7 @@ class BLSTMEncoder(nn.Module):
         self.pool_type = config['pool_type']
         self.dpout_enc = config['dpout_enc']
         self.relu_before_pool = config['relu_before_pool']
+        self.device = config['device']
 
         self.enc_lstm = nn.LSTM(self.word_emb_dim, self.enc_rnn_dim, 1,
                                 bidirectional=True, dropout=self.dpout_enc)
@@ -228,8 +229,7 @@ class BLSTMEncoder(nn.Module):
         sent_len, idx_sort = np.sort(
             sent_len)[::-1].copy(), np.argsort(-sent_len)
         idx_unsort = np.argsort(idx_sort)
-        idx_sort = torch.from_numpy(idx_sort).cuda() if self.is_cuda() \
-            else torch.from_numpy(idx_sort)
+        idx_sort = torch.from_numpy(idx_sort).to(self.device)
         sent = sent.index_select(1, Variable(idx_sort))
 
         # Handling padding in Recurrent Networks
@@ -243,8 +243,7 @@ class BLSTMEncoder(nn.Module):
             sent_output, False, padding_value)[0]
 
         # Un-sort by length
-        idx_unsort = torch.from_numpy(idx_unsort).cuda() if self.is_cuda() \
-            else torch.from_numpy(idx_unsort)
+        idx_unsort = torch.from_numpy(idx_unsort).to(self.device)
         sent_output = sent_output.index_select(1, Variable(idx_unsort))
         if self.relu_before_pool:
             sent_output = nn.ReLU()(sent_output)
@@ -397,8 +396,7 @@ class BLSTMEncoder(nn.Module):
         embeddings = []
         for stidx in range(0, len(sentences), bsize):
             batch = self.get_batch(sentences[stidx:stidx + bsize])
-            if self.is_cuda():
-                batch = batch.cuda()
+            batch = batch.cuda(self.device)
             batch = self.forward(
                 (batch, lengths[stidx:stidx + bsize])).data.cpu().numpy()
             embeddings.append(batch)
@@ -427,9 +425,8 @@ class BLSTMEncoder(nn.Module):
             warnings.warn('No words in "{0}" have glove vectors. Replacing \
 						   by "<s> </s>"..'.format(sent))
         batch = self.get_batch(sent)
+        batch = batch.to(self.device)
 
-        if self.is_cuda():
-            batch = batch.cuda()
         output = self.enc_lstm(batch)[0]
         output, idxs = torch.max(output, 0)
         # output, idxs = output.squeeze(), idxs.squeeze()
