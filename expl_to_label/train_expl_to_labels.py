@@ -150,6 +150,7 @@ copy2('expl_to_label/data_expl_to_labels.py', current_run_dir)
 streamtologger.redirect(target=current_run_dir + '/log.txt')
 
 # set gpu device
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 torch.cuda.set_device(params.gpu_id)
 
 # print parameters passed, and all parameters
@@ -252,10 +253,12 @@ def trainepoch(epoch):
         # prepare batch
         expl_batch, expl_len = get_batch(
             expl_1[stidx:stidx + params.batch_size], word_vec)
-        expl_batch = Variable(expl_batch.cuda())
+        #expl_batch = Variable(expl_batch.cuda())
+        expl_batch = expl_batch.to(device)
 
         tgt_label_batch = Variable(torch.LongTensor(
             label[stidx:stidx + params.batch_size])).cuda()
+        tgt_label_batch = tgt_label_batch.to(device)
 
         # model forward train
         out_lbl = esnli_net((expl_batch, expl_len))
@@ -345,6 +348,7 @@ def evaluate_dev(epoch):
         # prepare batch
         tgt_label_batch = Variable(torch.LongTensor(
             label[i:i + params.eval_batch_size])).cuda()
+        tgt_label_batch.to(device)
 
         # print example
         if i % params.print_every == 0:
@@ -356,8 +360,8 @@ def evaluate_dev(epoch):
             expl = eval("expl_" + str(index))
             expl_batch, len_expl = get_batch(
                 expl[i:i + params.eval_batch_size], word_vec)
-            expl_batch = Variable(expl_batch.cuda())
-
+            expl_batch.to(device)
+            
             if i % params.print_every == 0:
                 print("Explanation " + str(index) + " :  ", ' '.join(expl[i]))
 
