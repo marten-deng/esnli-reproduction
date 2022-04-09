@@ -300,7 +300,7 @@ class ExplToLabelsNet(nn.Module):
     def forward(self, expl):
         # expl : ( Variable(T x bs x 300), lens_expl)
 
-        enc_out_expl = self.encoder(expl.copy())
+        enc_out_expl = self.encoder(expl)
         out_label = self.classifier(enc_out_expl)
 
         return out_label
