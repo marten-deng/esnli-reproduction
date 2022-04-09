@@ -255,7 +255,7 @@ def trainepoch(epoch):
         expl_batch, expl_len = get_batch(
             expl_1[stidx:stidx + params.batch_size], word_vec)
         #expl_batch = Variable(expl_batch.cuda())
-        expl_batch.to(device)
+        expl_batch = expl_batch.to(device)
         print(expl_batch)
         
         tgt_label_batch = torch.LongTensor(
