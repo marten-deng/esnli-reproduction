@@ -53,7 +53,7 @@ class BLSTMEncoder(nn.Module):
         # Un-sort by length
         idx_unsort = torch.from_numpy(idx_unsort).to(self.device)
         sent_output = sent_output.index_select(1, Variable(idx_unsort))
-        sent_len = sent_len[idx_unsort]
+        sent_len = sent_len[idx_unsort.cpu()]
 
         # Pooling
         if self.pool_type == "mean":
