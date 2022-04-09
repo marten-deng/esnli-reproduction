@@ -261,7 +261,7 @@ def trainepoch(epoch):
         
         tgt_label_batch = torch.LongTensor(
             label[stidx:stidx + params.batch_size])
-        tgt_label_batch.to(device)
+        tgt_label_batch = tgt_label_batch.to(device)
 
         # model forward train
         out_lbl = esnli_net((expl_batch, expl_len))
