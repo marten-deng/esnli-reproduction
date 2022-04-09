@@ -19,6 +19,8 @@ def get_batch(batch, word_vec):
     embed = np.zeros((max_len, len(batch), 300))
     for i in range(len(batch)):
         for j in range(len(batch[i])):
+            if (batch[i][j] == "<s>" or batch[i][j] == "</s>" or batch[i][j] == "<p>" or batch[i][j] == "</UNK>"):
+                continue
             embed[j, i, :] = word_vec[batch[i][j]]
 
     return torch.from_numpy(embed).float(), lengths
