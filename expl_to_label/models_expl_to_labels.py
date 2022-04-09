@@ -41,7 +41,7 @@ class BLSTMEncoder(nn.Module):
         sent = sent.index_select(1, Variable(idx_sort))
 
         # Handling padding in Recurrent Networks
-        sent_packed = nn.utils.rnn.pack_padded_sequence(sent.copy(), sent_len)
+        sent_packed = nn.utils.rnn.pack_padded_sequence(sent, sent_len.copy())
         self.enc_lstm.flatten_parameters()
         sent_output = self.enc_lstm(sent_packed)[0]  # seqlen x batch x 2*nhid
         padding_value = 0.0
