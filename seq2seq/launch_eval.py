@@ -34,7 +34,7 @@ eval_params = parser.parse_args()
 streamtologger.redirect(target=eval_params.directory + '/log_eval.txt')
 
 print(os.path.join(eval_params.directory, eval_params.state_path))
-state = torch.load(os.path.join(eval_params.directory, eval_params.state_path), map_location=torch.device('cpu'))
+state = torch.load(os.path.join(eval_params.directory, eval_params.state_path))
 model_config = state['config_model']
 
 model_state_dict = state['model_state']
@@ -58,8 +58,8 @@ torch.cuda.manual_seed(params.seed)
 torch.backends.cudnn.deterministic = params.cudnn_deterministic
 
 
-copy2('launch_eval.py', eval_params.directory)
-copy2('eval_sent_embeddings_labels_in_expl.py', eval_params.directory)
+copy2('./launch_eval.py', eval_params.directory)
+copy2('./eval_sent_embeddings_labels_in_expl.py', eval_params.directory)
 
 #import sys
 #sys.path.insert(0, eval_params.directory)
