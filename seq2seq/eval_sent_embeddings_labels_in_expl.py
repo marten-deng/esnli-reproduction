@@ -16,7 +16,7 @@ from mutils import get_sentence_from_indices, get_key_from_val, remove_file, ass
 import senteval
 
 PATH_TO_DATA = '../data/senteval_data/'
-GLOVE_PATH = '../dataset/GloVe/glove.840B.300d.txt'
+GLOVE_PATH = './dataset/GloVe/glove.840B.300d.txt'
 
 
 # dataset is the name: dev or test
