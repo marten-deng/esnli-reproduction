@@ -243,7 +243,7 @@ def eval_datasets_without_expl(esnli_net, which_set, data, word_vec, word_emb_di
     return eval_acc, eval_acc_label_expl
 
 
-def eval_all(esnli_net, criterion_expl, params):
+def eval_all(esnli_net, criterion_expl, params, device):
     word_index = params.word_index
     word_emb_dim = params.word_emb_dim
     batch_size = params.eval_batch_size

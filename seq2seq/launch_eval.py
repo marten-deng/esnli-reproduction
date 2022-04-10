@@ -12,7 +12,7 @@ import eval_sent_embeddings_labels_in_expl
 
 import streamtologger
 
-GLOVE_PATH = '../dataset/GloVe/glove.840B.300d.txt'
+GLOVE_PATH = './dataset/GloVe/glove.840B.300d.txt'
 
 parser = argparse.ArgumentParser(description='eval')
 # paths
@@ -69,13 +69,14 @@ esnli_net.load_state_dict(model_state_dict)
 
 # set gpu device
 torch.cuda.set_device(params.gpu_id)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # criterion
 pad_idx = model_config['word_index']["<p>"]
 criterion_expl = nn.CrossEntropyLoss(ignore_index=pad_idx).cuda()
 criterion_expl.size_average = False
 
-eval_sent_embeddings_labels_in_expl.eval_all(esnli_net, criterion_expl, params)
+eval_sent_embeddings_labels_in_expl.eval_all(esnli_net, criterion_expl, params, device)
 
 txt_file = 'DONE_eval.txt'
 file = os.path.join(params.current_run_dir, txt_file)
