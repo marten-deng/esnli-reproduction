@@ -210,8 +210,11 @@ class BLSTMEncoder(nn.Module):
         self.pool_type = config['pool_type']
         self.dpout_enc = config['dpout_enc']
         self.relu_before_pool = config['relu_before_pool']
-        self.device = config['device']
-
+        if "device" in config:
+            self.device = config['device']
+        else:
+            self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            
         self.enc_lstm = nn.LSTM(self.word_emb_dim, self.enc_rnn_dim, 1,
                                 bidirectional=True, dropout=self.dpout_enc)
 
