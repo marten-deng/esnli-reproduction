@@ -31,7 +31,7 @@ eval_params = parser.parse_args()
 if not os.path.exists("copy_models_attention_bottom_separate.py"):
     shutil.copy("attention/models_attention_bottom_separate.py",
                 "copy_models_attention_bottom_separate.py")
-from copy_models_attention_bottom_separate import eSNLIAttention
+from models_attention_bottom_separate import eSNLIAttention
 
 
 streamtologger.redirect(target=os.path.join(eval_params.directory, time.strftime(
