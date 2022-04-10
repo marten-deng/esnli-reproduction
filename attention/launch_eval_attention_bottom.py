@@ -40,7 +40,7 @@ streamtologger.redirect(target=os.path.join(eval_params.directory, time.strftime
 
 # attention model
 state_att = torch.load(os.path.join(
-    eval_params.directory, eval_params.state_path),encoding="latin1")
+    eval_params.directory, eval_params.state_path),encoding="latin1",strict=False)
 model_config_att = state_att['config_model']
 model_state_dict = state_att['model_state']
 att_net = eSNLIAttention(model_config_att).cuda()
