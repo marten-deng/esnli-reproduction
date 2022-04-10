@@ -39,13 +39,13 @@ def evaluate_snli_final(esnli_net, criterion_expl, dataset, data, expl_no_unk, w
     writer = csv.writer(expl_f)
     writer.writerow(headers)
 
-    s1 = data['s1'][:30]
-    s2 = data['s2'][:30]
-    expl_1 = data['expl_1'][:30]
-    expl_2 = data['expl_2'][:30]
-    expl_3 = data['expl_3'][:30]
-    label = data['label'][:30]
-    label_expl = data['label_expl'][:300]
+    s1 = data['s1'][:1000]
+    s2 = data['s2'][:1000]
+    expl_1 = data['expl_1'][:1000]
+    expl_2 = data['expl_2'][:1000]
+    expl_3 = data['expl_3'][:1000]
+    label = data['label'][:1000]
+    label_expl = data['label_expl'][:1000]
 
     for i in range(0, len(s1), batch_size):
         print(f"iteration: {int(i/batch_size)}/{int(len(s1)/batch_size)}")
