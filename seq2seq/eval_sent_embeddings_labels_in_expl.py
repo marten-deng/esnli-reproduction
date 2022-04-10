@@ -48,6 +48,7 @@ def evaluate_snli_final(esnli_net, criterion_expl, dataset, data, expl_no_unk, w
     label_expl = data['label_expl']
 
     for i in range(0, len(s1), batch_size):
+        print(f"iteration: {int(batch_size/i)}/{int(len(s1)/batch_size)}")
         # prepare batch
         s1_batch, s1_len = get_batch(s1[i:i + batch_size], word_vec)
         s2_batch, s2_len = get_batch(s2[i:i + batch_size], word_vec)

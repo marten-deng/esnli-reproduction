@@ -52,6 +52,7 @@ params.word_vec_expl = model_config_att['word_vec']
 params.current_run_dir = eval_params.directory
 params.eval_batch_size = eval_params.eval_batch_size
 params.eval_just_snli = eval_params.eval_just_snli
+params.esnli_path = "./dataset/eSNLI"
 
 # expl_to_label model
 state_expl_to_labels = torch.load(os.path.join(

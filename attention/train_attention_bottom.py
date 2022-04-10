@@ -27,7 +27,7 @@ matplotlib.use("agg")
 import matplotlib.pyplot as plt
 
 
-GLOVE_PATH = '../dataset/GloVe/glove.840B.300d.txt'
+GLOVE_PATH = './dataset/GloVe/glove.840B.300d.txt'
 
 
 parser = argparse.ArgumentParser(description='NLI training')

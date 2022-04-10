@@ -14,10 +14,11 @@ from torch.autograd import Variable
 from data_attention_bottom import get_train, get_dev_test_original_expl, get_batch, build_vocab, get_target_expl_batch, get_dev_test_with_expl, get_dev_or_test_without_expl, NLI_DIC_LABELS
 import sys
 
-from utils.mutils import get_sentence_from_indices, get_key_from_val, remove_file, assert_sizes, bleu_prediction
+sys.path.append("./utils")
+from mutils import get_sentence_from_indices, get_key_from_val, remove_file, assert_sizes, bleu_prediction
 
 
-GLOVE_PATH = '../dataset/GloVe/glove.840B.300d.txt'
+GLOVE_PATH = './dataset/GloVe/glove.840B.300d.txt'
 
 
 # dataset is the name: dev or test
@@ -50,6 +51,7 @@ def evaluate_snli_final(esnli_net, expl_to_labels_net, criterion_expl, dataset, 
     for i in range(0, len(s1), batch_size):
         # print "\n\n\n i ", i
         # prepare batch
+        print(f"iteration: {int(batch_size/i)}/{int(len(s1)/batch_size)}")
         s1_batch, s1_len = get_batch(s1[i:i + batch_size], word_vec)
         s2_batch, s2_len = get_batch(s2[i:i + batch_size], word_vec)
         s1_batch, s2_batch = Variable(
