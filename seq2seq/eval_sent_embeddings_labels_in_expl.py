@@ -39,12 +39,12 @@ def evaluate_snli_final(esnli_net, criterion_expl, dataset, data, expl_no_unk, w
     writer = csv.writer(expl_f)
     writer.writerow(headers)
 
-    s1 = data['s1'][:300]
-    s2 = data['s2'][:300]
-    expl_1 = data['expl_1'][:300]
-    expl_2 = data['expl_2'][:300]
-    expl_3 = data['expl_3'][:300]
-    label = data['label'][:300]
+    s1 = data['s1'][:30]
+    s2 = data['s2'][:30]
+    expl_1 = data['expl_1'][:30]
+    expl_2 = data['expl_2'][:30]
+    expl_3 = data['expl_3'][:30]
+    label = data['label'][:30]
     label_expl = data['label_expl'][:300]
 
     for i in range(0, len(s1), batch_size):
@@ -144,7 +144,8 @@ def evaluate_snli_final(esnli_net, criterion_expl, dataset, data, expl_no_unk, w
             row.append(expl_no_unk['expl_2'][i + j])
             row.append(expl_no_unk['expl_3'][i + j])
             writer.writerow(row)
-
+    
+    print(correct)
     eval_acc = round(100 * correct / len(s1), 2)
     eval_acc_label_expl = round(100 * correct_labels_expl / len(s1), 2)
     eval_ppl = math.exp(cum_test_ppl / cum_test_n_words)
