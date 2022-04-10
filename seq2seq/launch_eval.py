@@ -46,7 +46,7 @@ params.train_snli_classif = eval_params.train_snli_classif
 params.use_prototype_senteval = eval_params.use_prototype_senteval
 params.do_image_caption = eval_params.do_image_caption
 params.cudnn_deterministic = eval_params.cudnn_deterministic
-
+params.esnli_path = "dataset/eSNLI"
 
 """
 SEED
