@@ -144,9 +144,8 @@ def evaluate_snli_final(esnli_net, criterion_expl, dataset, data, expl_no_unk, w
             row.append(expl_no_unk['expl_2'][i + j])
             row.append(expl_no_unk['expl_3'][i + j])
             writer.writerow(row)
-    
-    print(correct.item())
-    eval_acc = round(100 * correct / len(s1), 2)
+
+    eval_acc = round(100 * correct.item() / len(s1), 2)
     eval_acc_label_expl = round(100 * correct_labels_expl / len(s1), 2)
     eval_ppl = math.exp(cum_test_ppl / cum_test_n_words)
 
